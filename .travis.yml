@@ -18,7 +18,7 @@ after_success:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
     # Take those images and push them to docker hub
-    - docker push -t chanmheric/multi-client
-    - docker push -t chanmheric/multi-nginx
-    - docker push -t chanmheric/multi-server
-    - docker push -t chanmheric/multi-worker 
+    - docker push chanmheric/multi-client
+    - docker push chanmheric/multi-nginx
+    - docker push chanmheric/multi-server
+    - docker push chanmheric/multi-worker 
