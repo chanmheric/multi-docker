@@ -1,0 +1,23 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t chanmheric/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true chanmheric/react-test npm test
+
+after_success:
+    - docker build -t chanmheric/multi-client ./client
+    - docker build -t chanmheric/multi-nginx ./nginx
+    - docker build -t chanmheric/multi-server ./server
+    - docker build -t chanmheric/multi-worker ./worker
+    # Log in
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    # Take those images and push them to docker hub
+    - docker push -t chanmheric/multi-client ./client
+    - docker push -t chanmheric/multi-nginx ./nginx
+    - docker push -t chanmheric/multi-server ./server
+    - docker push -t chanmheric/multi-worker ./worker 
