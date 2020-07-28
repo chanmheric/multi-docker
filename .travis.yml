@@ -22,3 +22,17 @@ after_success:
     - docker push chanmheric/multi-nginx
     - docker push chanmheric/multi-server
     - docker push chanmheric/multi-worker 
+
+deploy:
+    edge: true
+    provider: elasticbeanstalk
+    region: us-east-1
+    app: multi-docker
+    env: MultiDocker-env
+    bucket_name: elasticbeanstalk-us-east-1-557732472408
+    bucket_path: docker-multi
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+
